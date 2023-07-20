@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyfe/screens/home/home_page.dart';
+import 'package:fyfe/screens/services/auth_service.dart';
 import 'package:fyfe/widgets/custom_button.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -65,7 +69,31 @@ class _AccountPageState extends State<AccountPage> {
                       child: CustomButton(
                         title: "Continue with Google",
                         icon: "google",
-                        onTap: () {},
+                        onTap: () async {
+                          await AuthServices()
+                              .signInWithGoogle()
+                              .then((value) async {
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(FirebaseAuth.instance.currentUser!.uid)
+                                .set(
+                              {
+                                "email":
+                                    FirebaseAuth.instance.currentUser!.email,
+                                "uid": FirebaseAuth.instance.currentUser!.uid,
+                                "name": FirebaseAuth
+                                    .instance.currentUser!.displayName,
+                                "photo":
+                                    FirebaseAuth.instance.currentUser!.photoURL,
+                              },
+                            ).then((value) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => HomePage()));
+                            });
+                          });
+                        },
                       ),
                     ),
                     if (Platform.isIOS)
