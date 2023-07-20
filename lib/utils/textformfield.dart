@@ -33,11 +33,9 @@ class TextFormInputField extends StatelessWidget {
       inputFormatters: inputFormatters,
       validator: validat,
       decoration: InputDecoration(
-          isDense: true,
           fillColor: Colors.white,
           filled: true,
-          hintText: "15 Roma Rd St Ives",
-          enabled: false,
+          hintText: hintText,
           errorText: error,
           hintStyle:
               const TextStyle(color: Color(0xffB3B3B3), fontFamily: "Mulish"),
