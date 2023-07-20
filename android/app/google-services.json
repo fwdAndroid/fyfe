@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:893504330238:android:00e6472ba456f9e818c8af",
+        "mobilesdk_app_id": "1:893504330238:android:32f2abc8bdcb5d1a18c8af",
         "android_client_info": {
-          "package_name": "com.example.fyfe"
+          "package_name": "com.fyfe.fawad"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "893504330238-ps98ck6tj75nrlneh2pd9b0n3p7cvd2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fyfe.fawad",
+            "certificate_hash": "d032a8260e33ba4be50791313c00d31bbdfe96a4"
+          }
+        },
         {
           "client_id": "893504330238-uhgb4nsgaoioo5qnae0acjesu75v24p6.apps.googleusercontent.com",
           "client_type": 3
