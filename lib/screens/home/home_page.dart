@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyfe/screens/property/add_property.dart';
 import 'package:fyfe/widgets/custom_appbar.dart';
 import 'package:fyfe/widgets/custom_drawer.dart';
 import 'package:fyfe/widgets/palette.dart';
@@ -110,7 +111,11 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {
-                                        // controller.goToAddProperty();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (builder) =>
+                                                    AddProperty()));
                                       },
                                       child: Text("Add Property"),
                                       style: ElevatedButton.styleFrom(
