@@ -1,4 +1,4 @@
-package com.example.fyfe
+package com.fyfe.fawad
 
 import io.flutter.embedding.android.FlutterActivity
 
