@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyfe/screens/account/login_page.dart';
+import 'package:fyfe/screens/home/home_page.dart';
+import 'package:fyfe/screens/property/all_properties.dart';
 import 'package:fyfe/widgets/palette.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -40,11 +42,8 @@ class CustomDrawer extends StatelessWidget {
             InkWell(
               onTap: () {
                 Scaffold.of(context).closeDrawer();
-                // Get.until(
-                //   (route) {
-                //     return route.settings.name == "/home";
-                //   },
-                // );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (builder) => HomePage()));
               },
               child: Row(
                 children: const [
@@ -79,12 +78,8 @@ class CustomDrawer extends StatelessWidget {
             InkWell(
               onTap: () {
                 Scaffold.of(context).closeDrawer();
-                // Get.offNamedUntil(
-                //   "/allProperties",
-                //   (route) {
-                //     return route.settings.name == "/home";
-                //   },
-                // );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (builder) => AllProperties()));
               },
               child: Row(
                 children: const [
