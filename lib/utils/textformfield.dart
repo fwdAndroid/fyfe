@@ -8,6 +8,8 @@ class TextFormInputField extends StatelessWidget {
   final String hintText;
   final TextInputType textInputType;
   final Widget? preIcon;
+  final void Function()? onTap;
+
   final AutovalidateMode? autovalidateMode;
   final FormFieldValidator? validat;
   final List<TextInputFormatter>? inputFormatters;
@@ -19,6 +21,7 @@ class TextFormInputField extends StatelessWidget {
       this.isPass = false,
       this.preIcon,
       this.error,
+      this.onTap,
       this.autovalidateMode,
       this.inputFormatters,
       this.validat,
@@ -29,6 +32,7 @@ class TextFormInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
       autovalidateMode: autovalidateMode,
       inputFormatters: inputFormatters,
       validator: validat,
