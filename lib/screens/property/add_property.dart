@@ -1,14 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fyfe/screens/property/add_property_image.dart';
-import 'package:fyfe/utils/controllers.dart';
-import 'package:fyfe/utils/text_util.dart';
-import 'package:fyfe/utils/textformfield.dart';
-import 'package:fyfe/widgets/custom_appbar.dart';
 import 'package:fyfe/widgets/custom_drawer.dart';
 import 'package:fyfe/widgets/add_property_form_widget.dart';
-import 'package:fyfe/widgets/palette.dart';
 import 'package:fyfe/widgets/step_indicator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

@@ -9,6 +9,7 @@ class TextFormInputField extends StatelessWidget {
   final TextInputType textInputType;
   final Widget? preIcon;
   final void Function()? onTap;
+  final void Function(String)? onChanged;
 
   final AutovalidateMode? autovalidateMode;
   final FormFieldValidator? validat;
@@ -20,6 +21,7 @@ class TextFormInputField extends StatelessWidget {
       required this.controller,
       this.isPass = false,
       this.preIcon,
+      this.onChanged,
       this.error,
       this.onTap,
       this.autovalidateMode,
@@ -36,6 +38,7 @@ class TextFormInputField extends StatelessWidget {
       autovalidateMode: autovalidateMode,
       inputFormatters: inputFormatters,
       validator: validat,
+      onChanged: onChanged,
       decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
