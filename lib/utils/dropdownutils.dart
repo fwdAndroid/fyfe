@@ -20,3 +20,4 @@ List<String> rentTypes = [
   "daily",
 ];
 String agentName = "Add Agent";
+String insuranceName = "Add Insurance";

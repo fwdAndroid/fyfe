@@ -24,6 +24,8 @@ class FormWidget extends StatefulWidget {
 class _FormWidgetState extends State<FormWidget> {
   final formKey = GlobalKey<FormState>();
   bool uploading = false;
+  String? selectedCategory;
+  String? selectedInsurance;
 
   @override
   Widget build(BuildContext context) {
@@ -343,6 +345,7 @@ class _FormWidgetState extends State<FormWidget> {
                         height: 9,
                       ),
                       Container(
+                        height: 63,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 7,
@@ -351,50 +354,62 @@ class _FormWidgetState extends State<FormWidget> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: DropdownButtonFormField<String>(
-                          isExpanded: true,
-                          alignment: AlignmentDirectional.center,
-                          hint: const Text(
-                            'Name',
-                          ),
-                          items: [''].map((e) {
-                            return DropdownMenuItem<String>(
-                              alignment: AlignmentDirectional.center,
-                              value: agentName,
-                              child: Text(
-                                "",
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                            );
-                          }).toList()
-                            ..add(DropdownMenuItem<String>(
-                              enabled: false,
-                              value: "0",
-                              alignment: AlignmentDirectional.center,
-                              child: InkWell(
-                                onTap: () {
-                                  Dialogs().addAgentDialog(context, "Agents");
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.add),
-                                    Text(
-                                      agentName,
-                                      style: TextStyle(color: Colors.black),
+                        child: StreamBuilder<QuerySnapshot>(
+                          // StreamBuilder to listen for changes in the categories collection
+                          stream: FirebaseFirestore.instance
+                              .collection('agents')
+                              .where("id",
+                                  isEqualTo:
+                                      FirebaseAuth.instance.currentUser!.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return CircularProgressIndicator(); // Show a loading indicator while data is being fetched
+                            }
+
+                            // Extract category names from the documents
+                            List<String> categories = snapshot.data!.docs
+                                .map((doc) => doc['contactName'] as String)
+                                .toList();
+
+                            return DropdownButtonFormField<String>(
+                              value: selectedCategory,
+                              items: categories.map((category) {
+                                return DropdownMenuItem<String>(
+                                  value: category,
+                                  child: Text(category),
+                                );
+                              }).toList()
+                                ..add(DropdownMenuItem<String>(
+                                  enabled: false,
+                                  value: "0",
+                                  alignment: AlignmentDirectional.center,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Dialogs()
+                                          .addAgentDialog(context, "Agents");
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.add),
+                                        Text(
+                                          agentName,
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            )),
-                          icon: const SizedBox(),
-                          value: agentName,
-                          onChanged: (value) {
-                            agentName = value!;
+                                  ),
+                                )),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedCategory = value;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Select a Agent"),
+                            );
                           },
-                          decoration: const InputDecoration(
-                            isDense: true,
-                            border: InputBorder.none,
-                          ),
                         ),
                       )
                     ],
@@ -481,7 +496,8 @@ class _FormWidgetState extends State<FormWidget> {
                         height: 9,
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(
+                        height: 63,
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 7,
                         ),
@@ -489,48 +505,64 @@ class _FormWidgetState extends State<FormWidget> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: DropdownButtonFormField<String>(
-                          isExpanded: true,
-                          alignment: AlignmentDirectional.center,
-                          //  value: dropdownValue,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              //   dropdownValue = newValue!;
-                            });
-                          },
-                          hint: const Text(
-                            'Name',
-                          ),
-                          items: <String>[""]
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            );
-                          }).toList()
-                            ..add(
-                              DropdownMenuItem<String>(
-                                child: InkWell(
-                                  onTap: () {
-                                    Dialogs().addInsuranceDialog(
-                                        context, "Insurance");
-                                  },
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.add),
-                                      Text(
-                                        'Add Insurer',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
-                                      ),
-                                    ],
+                        child: StreamBuilder<QuerySnapshot>(
+                          // StreamBuilder to listen for changes in the categories collection
+                          stream: FirebaseFirestore.instance
+                              .collection('insurance')
+                              .where("id",
+                                  isEqualTo:
+                                      FirebaseAuth.instance.currentUser!.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return CircularProgressIndicator(); // Show a loading indicator while data is being fetched
+                            }
+
+                            // Extract category names from the documents
+                            List<String> categories = snapshot.data!.docs
+                                .map((doc) => doc['contactName'] as String)
+                                .toList();
+
+                            return DropdownButtonFormField<String>(
+                              value: selectedInsurance,
+                              items: categories.map((category) {
+                                return DropdownMenuItem<String>(
+                                  value: category,
+                                  child: Text(category),
+                                );
+                              }).toList()
+                                ..add(DropdownMenuItem<String>(
+                                  enabled: false,
+                                  value: "0",
+                                  alignment: AlignmentDirectional.center,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Dialogs().addInsuranceDialog(
+                                          context, "Insurance");
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.add),
+                                        Text(
+                                          insuranceName,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
+                                )),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedInsurance = value;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Select a Insurance"),
+                            );
+                          },
                         ),
                       )
                     ],
@@ -643,6 +675,8 @@ class _FormWidgetState extends State<FormWidget> {
                             showSnakBar("Loan Amount is Required", context);
                           } else if (datePurchaseController.text.isEmpty) {
                             showSnakBar("Date is Required", context);
+                          } else if (rentController.text.isEmpty) {
+                            showSnakBar("Rent is Required", context);
                           } else if (propertyAddressController.text.isEmpty &&
                               valueController.text.isEmpty &&
                               purchasepriceController.text.isEmpty) {
@@ -659,28 +693,25 @@ class _FormWidgetState extends State<FormWidget> {
                                 .set({
                               "propertyType": propertyType,
                               "propertyAddress": propertyAddressController.text,
-                              "numberofbeds": bedsController.text ?? "",
-                              "numberofbathrooms":
-                                  bathroomsController.text ?? "",
+                              "numberofbeds": bedsController.text,
+                              "numberofbathrooms": bathroomsController.text,
                               "numberofcarparks":
-                                  propertyAddressController.text ?? "",
+                                  propertyAddressController.text,
                               "propertyValue": valueController.text,
                               "propertyPurchasePrice":
                                   int.parse(purchasepriceController.text),
                               "loanAmount": int.parse(loanController.text),
                               "propertyPurchaseDate":
                                   datePurchaseController.text,
-                              "propertyRent":
-                                  int.parse(rentController.text) ?? 0,
-                              "agentName": agentName ?? "",
+                              "propertyRent": int.parse(rentController.text),
+                              "agentName": selectedCategory,
                               "propertyLeaseStart":
                                   leaseStartDateController.text,
                               "propertyLeaseEnd": leaseStartDateend.text,
-                              "insure": "Insurance need to be add" ?? "",
-                              "policyNumber": policyNumberController.text ?? "",
-                              "policyObtainedDate":
-                                  policyStartController.text ?? "",
-                              "policyEndDate": policyEndController.text ?? "",
+                              "insure": selectedInsurance ?? "",
+                              "policyNumber": policyNumberController.text,
+                              "policyObtainedDate": policyStartController.text,
+                              "policyEndDate": policyEndController.text,
                               "photo": [],
                               "uid": FirebaseAuth.instance.currentUser!.uid,
                               "uuid": uuid
