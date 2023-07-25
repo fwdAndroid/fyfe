@@ -1,11 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fyfe/utils/controllers.dart';
 import 'package:fyfe/widgets/palette.dart';
 
 class ShowProperties extends StatefulWidget {
-  const ShowProperties({super.key});
+  final beds;
+  final bathrooms;
+  final carparks;
+  final loanamount;
+  final propertyValue;
+  final images;
+  final purchasedate;
+  final propertyPrice;
+  final rent;
+  final leaseStart;
+  final agent;
+  final leaseend;
+  final insure;
+  final policyend;
+  final policystart;
+  const ShowProperties({
+    super.key,
+    required this.bathrooms,
+    required this.beds,
+    required this.carparks,
+    required this.loanamount,
+    required this.images,
+    required this.propertyPrice,
+    required this.agent,
+    required this.insure,
+    required this.leaseStart,
+    required this.leaseend,
+    required this.policyend,
+    required this.policystart,
+    required this.propertyValue,
+    required this.purchasedate,
+    required this.rent,
+  });
 
   @override
   State<ShowProperties> createState() => _ShowPropertiesState();
@@ -17,6 +48,22 @@ class _ShowPropertiesState extends State<ShowProperties> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          centerTitle: true,
+          backgroundColor: const Color(
+            0xff3AC1CD,
+          ),
+          elevation: 0,
+          title: const Text(
+            "Property Details",
+            style: const TextStyle(
+                color: Colors.white,
+                fontFamily: "Nunito",
+                fontSize: 16,
+                fontWeight: FontWeight.w600),
+          ),
+        ),
         body: SafeArea(
           child: Container(
               decoration: const BoxDecoration(

@@ -126,8 +126,32 @@ class _AllPropertiesState extends State<AllProperties> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (builder) =>
-                                                ShowProperties()));
+                                            builder: (builder) => ShowProperties(
+                                                rent: document['propertyRent'],
+                                                purchasedate: document[
+                                                    'propertyPurchaseDate'],
+                                                propertyValue:
+                                                    document['propertyValue'],
+                                                policystart: document[
+                                                    'policyObtainedDate'],
+                                                policyend:
+                                                    document['policyEndDate'],
+                                                insure: document['insure'],
+                                                agent: document['agentName'],
+                                                propertyPrice: document[
+                                                    'propertyPurchasePrice'],
+                                                loanamount:
+                                                    document['loanAmount'],
+                                                leaseend: document[
+                                                    'propertyLeaseEnd'],
+                                                leaseStart: document[
+                                                    'propertyLeaseStart'],
+                                                carparks: document[
+                                                    'numberofcarparks'],
+                                                beds: document['numberofbeds'],
+                                                bathrooms: document[
+                                                    'numberofbathrooms'],
+                                                images: document["photo"])));
                                   },
                                   child: Container(
                                     height: 120,
