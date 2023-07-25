@@ -2,6 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyfe/utils/controllers.dart';
+import 'package:fyfe/utils/showsnak.dart';
+import 'package:fyfe/utils/text_util.dart';
+import 'package:fyfe/utils/textformfield.dart';
+import 'package:fyfe/widgets/palette.dart';
 
 class AgentTab extends StatefulWidget {
   const AgentTab({super.key});
@@ -55,6 +60,12 @@ class _AgentTabState extends State<AgentTab> {
                             snapshot.data!.docs;
                         final Map<String, dynamic> data =
                             documents[index].data() as Map<String, dynamic>;
+
+                        contactNameController.text = data['contactName'];
+                        companyNameController.text = data['companyName'];
+                        numberController.text = data['agentNumber'];
+                        emailController.text = data['agentEmail'];
+                        addressController.text = data['address'];
                         return Column(
                           children: [
                             ListTile(
@@ -72,11 +83,173 @@ class _AgentTabState extends State<AgentTab> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                              trailing: Container(
-                                padding: EdgeInsets.all(6.58),
-                                decoration:
-                                    BoxDecoration(color: Color(0xffDBDBDB)),
-                                child: SvgPicture.asset("assets/pencil.svg"),
+                              trailing: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Center(
+                                          child: TextUtil(
+                                            title: 'Update Agent"}',
+                                          ),
+                                        ),
+                                        content: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Text(
+                                                "* Contact Name",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextFormInputField(
+                                                hintText: "Melanie Smith",
+                                                controller:
+                                                    contactNameController,
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                textInputType:
+                                                    TextInputType.text,
+                                              ),
+                                              const SizedBox(
+                                                height: 14,
+                                              ),
+                                              const Text(
+                                                "Company",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextFormInputField(
+                                                controller:
+                                                    companyNameController,
+                                                hintText: "Company Name",
+                                                textInputType:
+                                                    TextInputType.text,
+                                              ),
+                                              const SizedBox(
+                                                height: 14,
+                                              ),
+                                              const Text(
+                                                "* Number",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextFormInputField(
+                                                controller: numberController,
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                textInputType:
+                                                    TextInputType.number,
+                                                hintText: "Number",
+                                              ),
+                                              const SizedBox(
+                                                height: 14,
+                                              ),
+                                              const Text(
+                                                "* Email",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextFormInputField(
+                                                controller: emailController,
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                textInputType:
+                                                    TextInputType.emailAddress,
+                                                hintText: "Email",
+                                              ),
+                                              const SizedBox(
+                                                height: 14,
+                                              ),
+                                              const Text(
+                                                "Address",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextFormInputField(
+                                                  controller: addressController,
+                                                  hintText: "Address",
+                                                  textInputType:
+                                                      TextInputType.text)
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  "Cancel",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () async {
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection("agents")
+                                                      .doc(data['uuid'])
+                                                      .update({
+                                                    "contactName":
+                                                        contactNameController
+                                                            .text,
+                                                    "companyName":
+                                                        companyNameController
+                                                            .text,
+                                                    "agentNumber":
+                                                        numberController.text,
+                                                    "agentEmail":
+                                                        emailController.text,
+                                                    'address':
+                                                        addressController.text
+                                                  });
+                                                  showSnakBar(
+                                                      "Agents are updated",
+                                                      context);
+                                                  Navigator.pop(context);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Palette.green),
+                                                child: const Text("Update"),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(6.58),
+                                  decoration:
+                                      BoxDecoration(color: Color(0xffDBDBDB)),
+                                  child: SvgPicture.asset("assets/pencil.svg"),
+                                ),
                               ),
                             ),
                             Divider()
