@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fyfe/routes/routes.dart';
 import 'package:fyfe/screens/splash/splashscren.dart';
 
 Future<void> main() async {
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Splash(),
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fyfe/utils/addresspage.dart';
 import 'package:fyfe/utils/controllers.dart';
 import 'package:fyfe/utils/dropdownutils.dart';
 import 'package:fyfe/utils/text_util.dart';
@@ -19,8 +18,7 @@ class FormWidget extends StatefulWidget {
 
 class _FormWidgetState extends State<FormWidget> {
   final formKey = GlobalKey<FormState>();
-  double? lat;
-  double? lng;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -41,13 +39,7 @@ class _FormWidgetState extends State<FormWidget> {
             ),
             TextFormInputField(
               onTap: () {
-                Navigator.pushNamed(context, "/addressPage").then((value) {
-                  if (value != null) {
-                    propertyAddressController.text = "0.0";
-                    lat = 0.0;
-                    lng = 0.0;
-                  }
-                });
+                Navigator.pushNamed(context, "/addressPage");
               },
               controller: propertyAddressController,
               hintText: "15 Roma Rd St Ives",

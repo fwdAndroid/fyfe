@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.18.1
   map: ^1.4.1
   shimmer_animation: ^2.1.0+1
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_lints: ^2.0.0

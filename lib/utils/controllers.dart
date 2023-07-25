@@ -19,3 +19,6 @@ final companyNameController = TextEditingController();
 final numberController = TextEditingController();
 final emailController = TextEditingController();
 final addressController = TextEditingController();
+
+double? lat;
+double? lng;
