@@ -23,6 +23,7 @@ class FormWidget extends StatefulWidget {
 
 class _FormWidgetState extends State<FormWidget> {
   final formKey = GlobalKey<FormState>();
+  bool uploading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -627,31 +628,75 @@ class _FormWidgetState extends State<FormWidget> {
             ),
             SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: SaveButton(
-                  title: "Save",
-                  onTap: () async {
-                    if (propertyAddressController.text.isEmpty) {
-                      showSnakBar("Address is Required", context);
-                    } else if (valueController.text.isEmpty) {
-                      showSnakBar("Property Value is Required", context);
-                    } else if (purchasepriceController.text.isEmpty) {
-                      showSnakBar("Property Price is Required", context);
-                    } else if (loanController.text.isEmpty) {
-                      showSnakBar("Loan Amount is Required", context);
-                    } else if (datePurchaseController.text.isEmpty) {
-                      showSnakBar("Date is Required", context);
-                    } else if (propertyAddressController.text.isEmpty &&
-                        valueController.text.isEmpty &&
-                        purchasepriceController.text.isEmpty) {
-                      showSnakBar("All Fields is Required", context);
-                    } else {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => AddPropertyImage()));
-                    }
-                  },
-                )),
+                child: uploading
+                    ? const Center(child: CircularProgressIndicator())
+                    : SaveButton(
+                        title: "Save",
+                        onTap: () async {
+                          if (propertyAddressController.text.isEmpty) {
+                            showSnakBar("Address is Required", context);
+                          } else if (valueController.text.isEmpty) {
+                            showSnakBar("Property Value is Required", context);
+                          } else if (purchasepriceController.text.isEmpty) {
+                            showSnakBar("Property Price is Required", context);
+                          } else if (loanController.text.isEmpty) {
+                            showSnakBar("Loan Amount is Required", context);
+                          } else if (datePurchaseController.text.isEmpty) {
+                            showSnakBar("Date is Required", context);
+                          } else if (propertyAddressController.text.isEmpty &&
+                              valueController.text.isEmpty &&
+                              purchasepriceController.text.isEmpty) {
+                            showSnakBar("All Fields is Required", context);
+                          } else {
+                            setState(() {
+                              uploading = true;
+                            });
+                            var uuid = Uuid().v4();
+
+                            await FirebaseFirestore.instance
+                                .collection("property")
+                                .doc(uuid)
+                                .set({
+                              "propertyType": propertyType,
+                              "propertyAddress": propertyAddressController.text,
+                              "numberofbeds": bedsController.text ?? "",
+                              "numberofbathrooms":
+                                  bathroomsController.text ?? "",
+                              "numberofcarparks":
+                                  propertyAddressController.text ?? "",
+                              "propertyValue": valueController.text,
+                              "propertyPurchasePrice":
+                                  int.parse(purchasepriceController.text),
+                              "loanAmount": int.parse(loanController.text),
+                              "propertyPurchaseDate":
+                                  datePurchaseController.text,
+                              "propertyRent":
+                                  int.parse(rentController.text) ?? 0,
+                              "agentName": agentName ?? "",
+                              "propertyLeaseStart":
+                                  leaseStartDateController.text,
+                              "propertyLeaseEnd": leaseStartDateend.text,
+                              "insure": "Insurance need to be add" ?? "",
+                              "policyNumber": policyNumberController.text ?? "",
+                              "policyObtainedDate":
+                                  policyStartController.text ?? "",
+                              "policyEndDate": policyEndController.text ?? "",
+                              "photo": [],
+                              "uid": FirebaseAuth.instance.currentUser!.uid,
+                              "uuid": uuid
+                            });
+                            setState(() {
+                              uploading = false;
+                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => AddPropertyImage(
+                                          uuid: uuid,
+                                        )));
+                          }
+                        },
+                      )),
             const SizedBox(
               height: 20,
             ),
