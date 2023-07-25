@@ -699,8 +699,8 @@ class _FormWidgetState extends State<FormWidget> {
                                   carparksController.text ?? "0",
                               "propertyValue": valueController.text,
                               "propertyPurchasePrice":
-                                  int.parse(purchasepriceController.text),
-                              "loanAmount": int.parse(loanController.text),
+                                  int.parse(purchasepriceController.text) ?? 0,
+                              "loanAmount": int.parse(loanController.text) ?? 0,
                               "propertyPurchaseDate":
                                   datePurchaseController.text,
                               "propertyRent": int.parse(rentController.text),

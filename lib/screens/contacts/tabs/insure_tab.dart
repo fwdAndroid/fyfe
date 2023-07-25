@@ -2,6 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyfe/services/database.dart';
+import 'package:fyfe/utils/showsnak.dart';
+import 'package:fyfe/utils/text_util.dart';
+import 'package:fyfe/utils/textformfield.dart';
+import 'package:fyfe/widgets/palette.dart';
+import '../../../utils/controllers.dart';
 
 class InsureTab extends StatefulWidget {
   const InsureTab({super.key});
@@ -55,6 +61,9 @@ class _InsureTabState extends State<InsureTab> {
                             snapshot.data!.docs;
                         final Map<String, dynamic> data =
                             documents[index].data() as Map<String, dynamic>;
+                        insuranceNameController.text = data['contactName'];
+                        insurancePhoneController.text = data['contactNumber'];
+                        insuranceEmailController.text = data['contactEmail'];
                         return Column(
                           children: [
                             ListTile(
@@ -72,11 +81,147 @@ class _InsureTabState extends State<InsureTab> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                              trailing: Container(
-                                padding: EdgeInsets.all(6.58),
-                                decoration:
-                                    BoxDecoration(color: Color(0xffDBDBDB)),
-                                child: SvgPicture.asset("assets/pencil.svg"),
+                              trailing: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Center(
+                                            child: TextUtil(
+                                              title: 'Update Insurer"}',
+                                            ),
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Text(
+                                                  "* Insurance Name",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextFormInputField(
+                                                  hintText: "Melanie Smith",
+                                                  controller:
+                                                      insuranceNameController,
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  textInputType:
+                                                      TextInputType.text,
+                                                ),
+                                                const SizedBox(
+                                                  height: 14,
+                                                ),
+                                                const Text(
+                                                  "* Insurance Contact Number",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextFormInputField(
+                                                  controller:
+                                                      insurancePhoneController,
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  textInputType:
+                                                      TextInputType.number,
+                                                  hintText: "Number",
+                                                ),
+                                                const SizedBox(
+                                                  height: 14,
+                                                ),
+                                                const Text(
+                                                  "* Insurance Contact Email",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextFormInputField(
+                                                  controller:
+                                                      insuranceEmailController,
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  textInputType: TextInputType
+                                                      .emailAddress,
+                                                  hintText: "Email",
+                                                ),
+                                                const SizedBox(
+                                                  height: 14,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                    "Cancel",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () async {
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection("insurance")
+                                                        .doc(data['uuid'])
+                                                        .update({
+                                                      "contactName":
+                                                          insuranceNameController
+                                                              .text,
+                                                      "contactEmail":
+                                                          insuranceEmailController
+                                                              .text,
+                                                      "contactNumber":
+                                                          insurancePhoneController
+                                                              .text
+                                                    });
+                                                    showSnakBar(
+                                                        "Insuance are updated",
+                                                        context);
+                                                    Navigator.pop(context);
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              Palette.green),
+                                                  child: const Text("Update"),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        );
+                                      });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(6.58),
+                                  decoration:
+                                      BoxDecoration(color: Color(0xffDBDBDB)),
+                                  child: SvgPicture.asset("assets/pencil.svg"),
+                                ),
                               ),
                             ),
                             Divider()
