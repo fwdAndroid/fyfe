@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyfe/screens/account/login_page.dart';
+import 'package:fyfe/screens/all_properties/all_properties.dart';
 import 'package:fyfe/screens/home/home_page.dart';
-import 'package:fyfe/screens/property/all_properties.dart';
 import 'package:fyfe/screens/reports/reports.dart';
 import 'package:fyfe/widgets/palette.dart';
 

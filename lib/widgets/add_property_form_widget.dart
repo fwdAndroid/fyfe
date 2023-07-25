@@ -692,10 +692,11 @@ class _FormWidgetState extends State<FormWidget> {
                                 .set({
                               "propertyType": propertyType,
                               "propertyAddress": propertyAddressController.text,
-                              "numberofbeds": bedsController.text,
-                              "numberofbathrooms": bathroomsController.text,
+                              "numberofbeds": bedsController.text ?? "0",
+                              "numberofbathrooms":
+                                  bathroomsController.text ?? "0",
                               "numberofcarparks":
-                                  propertyAddressController.text,
+                                  carparksController.text ?? "0",
                               "propertyValue": valueController.text,
                               "propertyPurchasePrice":
                                   int.parse(purchasepriceController.text),
