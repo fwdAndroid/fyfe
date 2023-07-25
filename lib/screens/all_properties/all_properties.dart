@@ -127,6 +127,8 @@ class _AllPropertiesState extends State<AllProperties> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (builder) => ShowProperties(
+                                                propertyAddress:
+                                                    document['propertyAddress'],
                                                 rent: document['propertyRent'],
                                                 purchasedate: document[
                                                     'propertyPurchaseDate'],
@@ -146,6 +148,8 @@ class _AllPropertiesState extends State<AllProperties> {
                                                     'propertyLeaseEnd'],
                                                 leaseStart: document[
                                                     'propertyLeaseStart'],
+                                                propertyType:
+                                                    document['propertyType'],
                                                 carparks: document[
                                                     'numberofcarparks'],
                                                 beds: document['numberofbeds'],

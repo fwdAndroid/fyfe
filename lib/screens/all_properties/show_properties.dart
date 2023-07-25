@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fyfe/widgets/palette.dart';
+import 'package:fyfe/utils/controllers.dart';
+import 'package:fyfe/utils/text_util.dart';
+import 'package:fyfe/utils/textformfield.dart';
 
 class ShowProperties extends StatefulWidget {
   final beds;
@@ -14,10 +16,12 @@ class ShowProperties extends StatefulWidget {
   final propertyPrice;
   final rent;
   final leaseStart;
+  final propertyType;
   final agent;
   final leaseend;
   final insure;
   final policyend;
+  final propertyAddress;
   final policystart;
   const ShowProperties({
     super.key,
@@ -25,6 +29,7 @@ class ShowProperties extends StatefulWidget {
     required this.beds,
     required this.carparks,
     required this.loanamount,
+    required this.propertyAddress,
     required this.images,
     required this.propertyPrice,
     required this.agent,
@@ -36,6 +41,7 @@ class ShowProperties extends StatefulWidget {
     required this.propertyValue,
     required this.purchasedate,
     required this.rent,
+    required this.propertyType,
   });
 
   @override
@@ -92,25 +98,27 @@ class _ShowPropertiesState extends State<ShowProperties> {
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(74))),
                           clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: CarouselSlider(
-                            options: CarouselOptions(height: 400.0),
-                            items: [1, 2, 3, 4, 5].map((i) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 5.0),
-                                      decoration:
-                                          BoxDecoration(color: Colors.amber),
-                                      child: Text(
-                                        'text $i',
-                                        style: TextStyle(fontSize: 16.0),
-                                      ));
-                                },
-                              );
-                            }).toList(),
-                          )),
+                          child: GridView.builder(
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: widget.images!.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3),
+                              itemBuilder: (context, index) {
+                                return Card(
+                                    child: Container(
+                                  height: 120,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      widget.images![index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ));
+                              })),
                       Positioned.fill(
                         bottom: -25,
                         child: Align(
@@ -136,22 +144,13 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "Property Address",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Palette.blue),
+                                      TextUtilProperty(
+                                        title: widget.propertyAddress,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(left: 4),
-                                        child: Text(
-                                          "PropertyType",
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 8,
-                                              color: Palette.blue),
+                                        child: TextUtilProperty(
+                                          title: widget.propertyType,
                                         ),
                                       )
                                     ],
@@ -162,7 +161,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                   width: 4,
                                 ),
                                 Text(
-                                  "Beds",
+                                  widget.beds,
                                   style: TextStyle(
                                       color: Color(0xffC5C5C5),
                                       fontSize: 10,
@@ -179,7 +178,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                   width: 4,
                                 ),
                                 Text(
-                                  "Bathrooms",
+                                  widget.bathrooms,
                                   style: TextStyle(
                                       color: Color(0xffC5C5C5),
                                       fontSize: 10,
@@ -196,7 +195,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                   width: 4,
                                 ),
                                 Text(
-                                  "Car Parks",
+                                  widget.carparks,
                                   style: TextStyle(
                                       color: Color(0xffC5C5C5),
                                       fontSize: 10,
@@ -252,14 +251,14 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                               color: Color(0xffD3D3D3),
                                             ),
                                           ),
-                                          // Text(
-                                          //   "\$${controller.detailsModel.value}",
-                                          //   style: const TextStyle(
-                                          //     fontSize: 16,
-                                          //     fontWeight: FontWeight.w600,
-                                          //     color: Colors.white,
-                                          //   ),
-                                          // ),
+                                          Text(
+                                            "\$${widget.propertyValue}",
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       Column(
@@ -274,14 +273,14 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                               color: Color(0xffD3D3D3),
                                             ),
                                           ),
-                                          // Text(
-                                          //   "\$${controller.detailsModel.purchasePrice}",
-                                          //   style: const TextStyle(
-                                          //     fontSize: 16,
-                                          //     fontWeight: FontWeight.w600,
-                                          //     color: Colors.white,
-                                          //   ),
-                                          // ),
+                                          Text(
+                                            "\$${widget.propertyPrice}",
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -309,14 +308,9 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                               color: Color(0xffD3D3D3),
                                             ),
                                           ),
-                                          // Text(
-                                          //   "\$${controller.detailsModel.loan}",
-                                          //   style: const TextStyle(
-                                          //     fontSize: 16,
-                                          //     fontWeight: FontWeight.w600,
-                                          //     color: Colors.white,
-                                          //   ),
-                                          // ),
+                                          TextUtil(
+                                              title:
+                                                  "\$${widget.loanamount.toString()}"),
                                         ],
                                       ),
                                       Column(
@@ -331,15 +325,9 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                               color: Color(0xffD3D3D3),
                                             ),
                                           ),
-                                          // Text(
-                                          //   controller
-                                          //       .detailsModel.purchaseDate,
-                                          //   style: const TextStyle(
-                                          //     fontSize: 16,
-                                          //     fontWeight: FontWeight.w600,
-                                          //     color: Colors.white,
-                                          //   ),
-                                          // ),
+                                          TextUtil(
+                                            title: widget.purchasedate,
+                                          )
                                         ],
                                       ),
                                     ],
@@ -362,41 +350,20 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Padding(
+                                          Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10),
-                                            child: Text(
-                                              "Rent",
-                                              style: TextStyle(
-                                                  fontFamily: 'Roboto',
-                                                  color: Colors.white),
+                                            child: TextUtil(
+                                              title: "Rent",
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 7,
                                           ),
-                                          TextFormField(
-                                            //  rentController.text,
-                                            decoration: InputDecoration(
-                                              enabled: false,
-                                              fillColor:
-                                                  const Color(0xffEEEEEE),
-                                              filled: true,
-                                              hintText: "Rent",
-                                              hintStyle: const TextStyle(
-                                                  color: Color(0xffB3B3B3),
-                                                  fontFamily: 'Roboto'),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 9.5,
-                                                      horizontal: 10),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
-                                                  borderSide: BorderSide.none),
-                                              // suffixIcon: const Icon(
-                                              //     Icons.arrow_drop_down)
-                                            ),
+                                          TextFormInputField(
+                                            controller: rentController,
+                                            hintText: widget.rent.toString(),
+                                            textInputType: TextInputType.text,
                                           ),
                                         ],
                                       ),
@@ -422,32 +389,11 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                         const SizedBox(
                                           height: 7,
                                         ),
-                                        // GestureDetector(
-
-                                        TextFormField(
-                                          // controller:
-                                          //     controller.leaseStartController,
-                                          decoration: InputDecoration(
-                                            enabled: false,
-                                            fillColor: const Color(0xffEEEEEE),
-                                            filled: true,
-                                            hintText: "01/01/2022",
-                                            hintStyle: const TextStyle(
-                                                color: Color(0xffB3B3B3),
-                                                fontFamily: 'Roboto'),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 9.5,
-                                                    horizontal: 10),
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
-                                                borderSide: BorderSide.none),
-                                            // suffixIcon: const Icon(
-                                            //     Icons.arrow_drop_down)
-                                          ),
+                                        TextFormInputField(
+                                          controller: leaseStartDateController,
+                                          hintText: widget.leaseStart,
+                                          textInputType: TextInputType.datetime,
                                         ),
-                                        // )
                                       ],
                                     ))
                                   ],
@@ -476,29 +422,10 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                           const SizedBox(
                                             height: 7,
                                           ),
-                                          TextFormField(
-                                            // controller:
-                                            //     controller.agentController,
-                                            decoration: InputDecoration(
-                                              enabled: false,
-                                              fillColor:
-                                                  const Color(0xffEEEEEE),
-                                              filled: true,
-                                              hintText: "Agent",
-                                              hintStyle: const TextStyle(
-                                                  color: Color(0xffB3B3B3),
-                                                  fontFamily: 'Roboto'),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 9.5,
-                                                      horizontal: 10),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
-                                                  borderSide: BorderSide.none),
-                                              // suffixIcon: const Icon(
-                                              //     Icons.arrow_drop_down)
-                                            ),
+                                          TextFormInputField(
+                                            controller: agentController,
+                                            hintText: widget.agent,
+                                            textInputType: TextInputType.text,
                                           ),
                                         ],
                                       ),
@@ -524,31 +451,11 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                         const SizedBox(
                                           height: 7,
                                         ),
-
-                                        TextFormField(
-                                          // controller:
-                                          //     controller.leaseEndController,
-                                          decoration: InputDecoration(
-                                            enabled: false,
-                                            fillColor: const Color(0xffEEEEEE),
-                                            filled: true,
-                                            hintText: "01/01/2022",
-                                            hintStyle: const TextStyle(
-                                                color: Color(0xffB3B3B3),
-                                                fontFamily: 'Roboto'),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 9.5,
-                                                    horizontal: 10),
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
-                                                borderSide: BorderSide.none),
-                                            // suffixIcon: const Icon(
-                                            //     Icons.arrow_drop_down),
-                                          ),
+                                        TextFormInputField(
+                                          controller: leaseStartDateend,
+                                          hintText: widget.leaseend,
+                                          textInputType: TextInputType.text,
                                         ),
-                                        // )
                                       ],
                                     ))
                                   ],
@@ -577,29 +484,10 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                           const SizedBox(
                                             height: 7,
                                           ),
-                                          TextFormField(
-                                            // controller:
-                                            //     controller.insurerController,
-                                            decoration: InputDecoration(
-                                              enabled: false,
-                                              fillColor:
-                                                  const Color(0xffEEEEEE),
-                                              filled: true,
-                                              hintText: "Insurer",
-                                              hintStyle: const TextStyle(
-                                                  color: Color(0xffB3B3B3),
-                                                  fontFamily: 'Roboto'),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 9.5,
-                                                      horizontal: 10),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
-                                                  borderSide: BorderSide.none),
-                                              // suffixIcon: const Icon(
-                                              //     Icons.arrow_drop_down)
-                                            ),
+                                          TextFormInputField(
+                                            controller: insuranceNameController,
+                                            hintText: widget.insure,
+                                            textInputType: TextInputType.text,
                                           ),
                                         ],
                                       ),
@@ -625,31 +513,11 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                         const SizedBox(
                                           height: 7,
                                         ),
-
-                                        TextFormField(
-                                          // controller:
-                                          //     controller.policyStartController,
-                                          decoration: InputDecoration(
-                                            enabled: false,
-                                            fillColor: const Color(0xffEEEEEE),
-                                            filled: true,
-                                            hintText: "01/01/2022",
-                                            hintStyle: const TextStyle(
-                                                color: Color(0xffB3B3B3),
-                                                fontFamily: 'Roboto'),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 9.5,
-                                                    horizontal: 10),
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
-                                                borderSide: BorderSide.none),
-                                            // suffixIcon: const Icon(
-                                            //     Icons.arrow_drop_down)
-                                          ),
+                                        TextFormInputField(
+                                          controller: policyStartController,
+                                          hintText: widget.policystart,
+                                          textInputType: TextInputType.text,
                                         ),
-                                        // )
                                       ],
                                     ))
                                   ],
@@ -678,28 +546,11 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                           const SizedBox(
                                             height: 7,
                                           ),
-                                          TextFormField(
-                                            // controller: controller
-                                            //     .insurancePolicyController,
-                                            decoration: InputDecoration(
-                                              fillColor:
-                                                  const Color(0xffEEEEEE),
-                                              filled: true,
-                                              enabled: false,
-                                              hintText: "PA1023241",
-                                              hintStyle: const TextStyle(
-                                                  color: Color(0xffB3B3B3),
-                                                  fontFamily: 'Roboto'),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 9.5,
-                                                      horizontal: 10),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
-                                                  borderSide: BorderSide.none),
-                                            ),
-                                          )
+                                          TextFormInputField(
+                                            controller: insuranceNameController,
+                                            hintText: widget.insure,
+                                            textInputType: TextInputType.text,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -724,31 +575,11 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                         const SizedBox(
                                           height: 7,
                                         ),
-
-                                        TextFormField(
-                                          // controller:
-                                          //     controller.policyEndController,
-                                          decoration: InputDecoration(
-                                            enabled: false,
-                                            fillColor: const Color(0xffEEEEEE),
-                                            filled: true,
-                                            hintText: "01/01/2022",
-                                            hintStyle: const TextStyle(
-                                                color: Color(0xffB3B3B3),
-                                                fontFamily: 'Roboto'),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 9.5,
-                                                    horizontal: 10),
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
-                                                borderSide: BorderSide.none),
-                                            // suffixIcon: const Icon(
-                                            //     Icons.arrow_drop_down),
-                                          ),
+                                        TextFormInputField(
+                                          controller: policyEndController,
+                                          hintText: widget.policyend,
+                                          textInputType: TextInputType.text,
                                         ),
-                                        // )
                                       ],
                                     ))
                                   ],

@@ -24,5 +24,7 @@ final insuranceEmailController = TextEditingController();
 final insuranceNameController = TextEditingController();
 final insurancePhoneController = TextEditingController();
 
+final agentController = TextEditingController();
+
 double? lat;
 double? lng;
