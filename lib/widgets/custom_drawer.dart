@@ -173,47 +173,47 @@ class CustomDrawer extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            InkWell(
-              onTap: () {
-                Scaffold.of(context).closeDrawer();
-                // Get.offNamedUntil(
-                //   "/superannuation",
-                //   (route) {
-                //     return route.settings.name == "/home";
-                //   },
-                // );
-              },
-              child: Row(
-                children: const [
-                  SizedBox(
-                    width: 26,
-                  ),
-                  Text("Superannuation"),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            InkWell(
-              onTap: () {
-                Scaffold.of(context).closeDrawer();
-                // Get.offNamedUntil(
-                //   "/will",
-                //   (route) {
-                //     return route.settings.name == "/home";
-                //   },
-                // );
-              },
-              child: Row(
-                children: const [
-                  SizedBox(
-                    width: 26,
-                  ),
-                  Text("Will"),
-                ],
-              ),
-            ),
+            // // InkWell(
+            // //   onTap: () {
+            // //     Scaffold.of(context).closeDrawer();
+            // //     // Get.offNamedUntil(
+            // //     //   "/superannuation",
+            // //     //   (route) {
+            // //     //     return route.settings.name == "/home";
+            // //     //   },
+            // //     // );
+            // //   },
+            // //   child: Row(
+            // //     children: const [
+            // //       SizedBox(
+            // //         width: 26,
+            // //       ),
+            // //       Text("Superannuation"),
+            // //     ],
+            // //   ),
+            // // ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
+            // InkWell(
+            //   onTap: () {
+            //     Scaffold.of(context).closeDrawer();
+            //     // Get.offNamedUntil(
+            //     //   "/will",
+            //     //   (route) {
+            //     //     return route.settings.name == "/home";
+            //     //   },
+            //     // );
+            //   },
+            //   child: Row(
+            //     children: const [
+            //       SizedBox(
+            //         width: 26,
+            //       ),
+            //       Text("Will"),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(
               height: 8,
             ),
