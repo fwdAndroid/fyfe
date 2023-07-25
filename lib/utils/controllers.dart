@@ -28,3 +28,7 @@ final agentController = TextEditingController();
 
 double? lat;
 double? lng;
+
+//Contact
+TabController? tabController;
+List typesList = ["Agents", "Insurers"];

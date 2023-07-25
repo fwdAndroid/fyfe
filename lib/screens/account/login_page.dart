@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyfe/screens/home/home_page.dart';
-import 'package:fyfe/screens/services/auth_service.dart';
+import 'package:fyfe/services/auth_service.dart';
 import 'package:fyfe/widgets/custom_button.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 

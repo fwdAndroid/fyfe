@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fyfe/utils/controllers.dart';
 import 'package:fyfe/utils/text_util.dart';
 import 'package:fyfe/utils/textformfield.dart';
