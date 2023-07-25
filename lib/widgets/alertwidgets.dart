@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyfe/services/database.dart';
 import 'package:fyfe/utils/controllers.dart';
 import 'package:fyfe/utils/text_util.dart';
 import 'package:fyfe/utils/textformfield.dart';
@@ -138,7 +139,21 @@ class Dialogs {
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      // controller.addAgentOrInsurer(dataType);
+                      Database()
+                          .addAgent(
+                              agentEmail: emailController.text,
+                              companyName: companyNameController.text,
+                              phoneNumber: numberController.text,
+                              contactName: contactNameController.text,
+                              address: addressController.text)
+                          .then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Agent Added")));
+                        Navigator.pop(context);
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("No Agent Added")));
                     }
                   },
                   style:
@@ -181,7 +196,7 @@ class Dialogs {
                   ),
                   TextFormInputField(
                     hintText: "Melanie Smith",
-                    controller: contactNameController,
+                    controller: insuranceNameController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -202,7 +217,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                    controller: numberController,
+                    controller: insurancePhoneController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -224,7 +239,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                    controller: emailController,
+                    controller: insuranceEmailController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -261,7 +276,20 @@ class Dialogs {
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      // controller.addAgentOrInsurer(dataType);
+                      Database()
+                          .addInsure(
+                        contactEmail: insuranceEmailController.text,
+                        contactNumber: insurancePhoneController.text,
+                        contactName: insuranceNameController.text,
+                      )
+                          .then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Insurrance Added")));
+                        Navigator.pop(context);
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("No Insurrance Added")));
                     }
                   },
                   style:

@@ -20,5 +20,9 @@ final numberController = TextEditingController();
 final emailController = TextEditingController();
 final addressController = TextEditingController();
 
+final insuranceEmailController = TextEditingController();
+final insuranceNameController = TextEditingController();
+final insurancePhoneController = TextEditingController();
+
 double? lat;
 double? lng;
