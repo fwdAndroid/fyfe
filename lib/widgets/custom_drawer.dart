@@ -4,6 +4,7 @@ import 'package:fyfe/screens/account/login_page.dart';
 import 'package:fyfe/screens/all_properties/all_properties.dart';
 import 'package:fyfe/screens/contacts/contacts.dart';
 import 'package:fyfe/screens/home/home_page.dart';
+import 'package:fyfe/screens/insurance/insurance.dart';
 import 'package:fyfe/screens/reports/reports.dart';
 import 'package:fyfe/widgets/palette.dart';
 
@@ -219,12 +220,8 @@ class CustomDrawer extends StatelessWidget {
             InkWell(
               onTap: () {
                 Scaffold.of(context).closeDrawer();
-                // Get.offNamedUntil(
-                //   "/insurance",
-                //   (route) {
-                //     return route.settings.name == "/home";
-                //   },
-                // );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (builder) => Insurance()));
               },
               child: Row(
                 children: const [
