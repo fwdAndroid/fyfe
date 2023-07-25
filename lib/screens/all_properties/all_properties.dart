@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fyfe/screens/all_properties/show_properties.dart';
 import 'package:fyfe/screens/property/add_property.dart';
 import 'package:fyfe/widgets/custom_appbar.dart';
 import 'package:fyfe/widgets/custom_drawer.dart';
@@ -120,14 +121,23 @@ class _AllPropertiesState extends State<AllProperties> {
                                 child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  height: 120,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Image.network(
-                                      document['photo'][0],
-                                      fit: BoxFit.cover,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (builder) =>
+                                                ShowProperties()));
+                                  },
+                                  child: Container(
+                                    height: 120,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.network(
+                                        document['photo'][0],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
