@@ -1,12 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fyfe/models/property_model.dart';
 import 'package:fyfe/utils/controllers.dart';
 import 'package:fyfe/utils/dropdownutils.dart';
+import 'package:fyfe/utils/showsnak.dart';
 import 'package:fyfe/utils/text_util.dart';
 import 'package:fyfe/utils/textformfield.dart';
 import 'package:fyfe/utils/thousands_formatter.dart';
 import 'package:fyfe/widgets/alertwidgets.dart';
 import 'package:fyfe/widgets/save_button_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 import '../screens/property/add_property_image.dart';
 
 class FormWidget extends StatefulWidget {
@@ -38,18 +43,12 @@ class _FormWidgetState extends State<FormWidget> {
               height: 9,
             ),
             TextFormInputField(
-              onTap: () {
-                Navigator.pushNamed(context, "/addressPage");
-              },
+              // onTap: () {
+              //   Navigator.pushNamed(context, "/addressPage");
+              // },
               controller: propertyAddressController,
               hintText: "15 Roma Rd St Ives",
               textInputType: TextInputType.emailAddress,
-              validat: (value) {
-                if (value!.isEmpty) {
-                  "This field is required";
-                }
-                return null;
-              },
             ),
             const SizedBox(
               height: 20,
@@ -194,12 +193,6 @@ class _FormWidgetState extends State<FormWidget> {
                         height: 9,
                       ),
                       TextFormInputField(
-                        validat: (value) {
-                          if (value!.isEmpty) {
-                            "This field is required";
-                          }
-                          return null;
-                        },
                         inputFormatters: [ThousandsInputFormatter()],
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: valueController,
@@ -226,12 +219,6 @@ class _FormWidgetState extends State<FormWidget> {
                         height: 9,
                       ),
                       TextFormInputField(
-                        validat: (value) {
-                          if (value!.isEmpty) {
-                            "This field is required";
-                          }
-                          return null;
-                        },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: purchasepriceController,
                         hintText: "0",
@@ -261,12 +248,6 @@ class _FormWidgetState extends State<FormWidget> {
                         height: 9,
                       ),
                       TextFormInputField(
-                        validat: (value) {
-                          if (value!.isEmpty) {
-                            "This field is required";
-                          }
-                          return null;
-                        },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: loanController,
                         hintText: "0",
@@ -294,12 +275,6 @@ class _FormWidgetState extends State<FormWidget> {
                       TextFormInputField(
                         onTap: () {
                           setDate(context, datePurchaseController);
-                        },
-                        validat: (value) {
-                          if (value!.isEmpty) {
-                            "Purchase date is required";
-                          }
-                          return null;
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: datePurchaseController,
@@ -653,15 +628,30 @@ class _FormWidgetState extends State<FormWidget> {
             SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: SaveButton(
-                    title: "Save",
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => AddPropertyImage()));
-                      }
-                    })),
+                  title: "Save",
+                  onTap: () async {
+                    if (propertyAddressController.text.isEmpty) {
+                      showSnakBar("Address is Required", context);
+                    } else if (valueController.text.isEmpty) {
+                      showSnakBar("Property Value is Required", context);
+                    } else if (purchasepriceController.text.isEmpty) {
+                      showSnakBar("Property Price is Required", context);
+                    } else if (loanController.text.isEmpty) {
+                      showSnakBar("Loan Amount is Required", context);
+                    } else if (datePurchaseController.text.isEmpty) {
+                      showSnakBar("Date is Required", context);
+                    } else if (propertyAddressController.text.isEmpty &&
+                        valueController.text.isEmpty &&
+                        purchasepriceController.text.isEmpty) {
+                      showSnakBar("All Fields is Required", context);
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => AddPropertyImage()));
+                    }
+                  },
+                )),
             const SizedBox(
               height: 20,
             ),

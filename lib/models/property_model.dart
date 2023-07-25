@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PropertyModel {
   String id;
-  List<String>? photo = [];
+  List<String> photo = [];
   String propertyAddress;
   String? propertyType;
   String? uuid;
@@ -33,7 +33,7 @@ class PropertyModel {
       this.uuid,
       this.policyNumber,
       this.policyStart,
-      this.photo,
+      required this.photo,
       this.beds,
       this.propertyType,
       required this.id,
