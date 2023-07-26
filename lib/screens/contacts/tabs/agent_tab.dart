@@ -61,11 +61,11 @@ class _AgentTabState extends State<AgentTab> {
                         final Map<String, dynamic> data =
                             documents[index].data() as Map<String, dynamic>;
 
-                        contactNameController.text = data['contactName'];
-                        companyNameController.text = data['companyName'];
-                        numberController.text = data['agentNumber'];
-                        emailController.text = data['agentEmail'];
-                        addressController.text = data['address'];
+                        agentTabNameControllers.text = data['contactName'];
+                        agentTabCompanyControllers.text = data['companyName'];
+                        agentTabNumbersControllers.text = data['agentNumber'];
+                        agentTabEmailControllers.text = data['agentEmail'];
+                        agentTabAddresslControllers.text = data['address'];
                         return Column(
                           children: [
                             ListTile(
@@ -110,7 +110,7 @@ class _AgentTabState extends State<AgentTab> {
                                               TextFormInputField(
                                                 hintText: "Melanie Smith",
                                                 controller:
-                                                    contactNameController,
+                                                    agentTabNameControllers,
                                                 autovalidateMode:
                                                     AutovalidateMode
                                                         .onUserInteraction,
@@ -129,7 +129,7 @@ class _AgentTabState extends State<AgentTab> {
                                               ),
                                               TextFormInputField(
                                                 controller:
-                                                    companyNameController,
+                                                    agentTabCompanyControllers,
                                                 hintText: "Company Name",
                                                 textInputType:
                                                     TextInputType.text,
@@ -145,7 +145,8 @@ class _AgentTabState extends State<AgentTab> {
                                                 height: 5,
                                               ),
                                               TextFormInputField(
-                                                controller: numberController,
+                                                controller:
+                                                    agentTabNumbersControllers,
                                                 autovalidateMode:
                                                     AutovalidateMode
                                                         .onUserInteraction,
@@ -164,7 +165,8 @@ class _AgentTabState extends State<AgentTab> {
                                                 height: 5,
                                               ),
                                               TextFormInputField(
-                                                controller: emailController,
+                                                controller:
+                                                    agentTabEmailControllers,
                                                 autovalidateMode:
                                                     AutovalidateMode
                                                         .onUserInteraction,
@@ -183,7 +185,8 @@ class _AgentTabState extends State<AgentTab> {
                                                 height: 5,
                                               ),
                                               TextFormInputField(
-                                                  controller: addressController,
+                                                  controller:
+                                                      agentTabAddresslControllers,
                                                   hintText: "Address",
                                                   textInputType:
                                                       TextInputType.text)
@@ -215,17 +218,20 @@ class _AgentTabState extends State<AgentTab> {
                                                       .doc(data['uuid'])
                                                       .update({
                                                     "contactName":
-                                                        contactNameController
+                                                        agentTabNameControllers
                                                             .text,
                                                     "companyName":
-                                                        companyNameController
+                                                        agentTabCompanyControllers
                                                             .text,
                                                     "agentNumber":
-                                                        numberController.text,
+                                                        agentTabNumbersControllers
+                                                            .text,
                                                     "agentEmail":
-                                                        emailController.text,
+                                                        agentTabEmailControllers
+                                                            .text,
                                                     'address':
-                                                        addressController.text
+                                                        agentTabAddresslControllers
+                                                            .text
                                                   });
                                                   showSnakBar(
                                                       "Agents are updated",

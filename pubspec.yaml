@@ -49,6 +49,7 @@ dependencies:
   intl: ^0.18.1
   map: ^1.4.1
   pdf: ^3.10.4
+  printing: ^5.11.0
   shimmer_animation: ^2.1.0+1
   uuid: ^3.0.7
 

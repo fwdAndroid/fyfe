@@ -33,7 +33,7 @@ class Dialogs {
                   ),
                   TextFormInputField(
                     hintText: "Melanie Smith",
-                    controller: contactNameController,
+                    controller: alertwidgetaddagentNameController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -54,7 +54,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                    controller: companyNameController,
+                    controller: alertWidgetaddAgentCompanyController,
                     hintText: "Company Name",
                     textInputType: TextInputType.text,
                   ),
@@ -69,7 +69,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                    controller: numberController,
+                    controller: alertWidgetaddNumbercontroller,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -91,7 +91,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                    controller: emailController,
+                    controller: alertWidgetaddAgentEmailController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -113,7 +113,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                      controller: addressController,
+                      controller: addagentalrertaddresscontroller,
                       hintText: "Address",
                       textInputType: TextInputType.text)
                 ],
@@ -141,11 +141,14 @@ class Dialogs {
                     if (formKey.currentState!.validate()) {
                       Database()
                           .addAgent(
-                              agentEmail: emailController.text,
-                              companyName: companyNameController.text,
-                              phoneNumber: numberController.text,
-                              contactName: contactNameController.text,
-                              address: addressController.text)
+                              agentEmail:
+                                  alertWidgetaddAgentEmailController.text,
+                              companyName:
+                                  alertWidgetaddAgentCompanyController.text,
+                              phoneNumber: alertWidgetaddNumbercontroller.text,
+                              contactName:
+                                  alertwidgetaddagentNameController.text,
+                              address: addagentalrertaddresscontroller.text)
                           .then((value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Agent Added")));
@@ -196,7 +199,7 @@ class Dialogs {
                   ),
                   TextFormInputField(
                     hintText: "Melanie Smith",
-                    controller: insuranceNameController,
+                    controller: alertwidgetinsuranceNameController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -217,7 +220,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                    controller: insurancePhoneController,
+                    controller: alertWidgetinsurancePhoneController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -239,7 +242,7 @@ class Dialogs {
                     height: 5,
                   ),
                   TextFormInputField(
-                    controller: insuranceEmailController,
+                    controller: alertinsuranceEmailController,
                     validat: (value) {
                       if (value!.isEmpty) {
                         return "This field is required";
@@ -278,9 +281,9 @@ class Dialogs {
                     if (formKey.currentState!.validate()) {
                       Database()
                           .addInsure(
-                        contactEmail: insuranceEmailController.text,
+                        contactEmail: alertinsuranceEmailController.text,
                         contactNumber: insurancePhoneController.text,
-                        contactName: insuranceNameController.text,
+                        contactName: alertwidgetinsuranceNameController.text,
                       )
                           .then((value) {
                         ScaffoldMessenger.of(context).showSnackBar(

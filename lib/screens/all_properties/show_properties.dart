@@ -360,7 +360,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                             height: 7,
                                           ),
                                           TextFormInputField(
-                                            controller: rentController,
+                                            controller: showrentController,
                                             hintText: widget.rent.toString(),
                                             textInputType: TextInputType.text,
                                           ),
@@ -389,7 +389,8 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                           height: 7,
                                         ),
                                         TextFormInputField(
-                                          controller: leaseStartDateController,
+                                          controller:
+                                              showleaseStartDateController,
                                           hintText: widget.leaseStart,
                                           textInputType: TextInputType.datetime,
                                         ),
@@ -422,7 +423,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                             height: 7,
                                           ),
                                           TextFormInputField(
-                                            controller: agentController,
+                                            controller: showagentController,
                                             hintText: widget.agent,
                                             textInputType: TextInputType.text,
                                           ),
@@ -451,7 +452,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                           height: 7,
                                         ),
                                         TextFormInputField(
-                                          controller: leaseStartDateend,
+                                          controller: showleaseStartDateend,
                                           hintText: widget.leaseend,
                                           textInputType: TextInputType.text,
                                         ),
@@ -484,7 +485,8 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                             height: 7,
                                           ),
                                           TextFormInputField(
-                                            controller: insuranceNameController,
+                                            controller:
+                                                showinsuranceNameController,
                                             hintText: widget.insure,
                                             textInputType: TextInputType.text,
                                           ),
@@ -513,7 +515,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                           height: 7,
                                         ),
                                         TextFormInputField(
-                                          controller: policyStartController,
+                                          controller: showpolicyStartController,
                                           hintText: widget.policystart,
                                           textInputType: TextInputType.text,
                                         ),
@@ -546,7 +548,8 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                             height: 7,
                                           ),
                                           TextFormInputField(
-                                            controller: insuranceNameController,
+                                            controller:
+                                                showinsuranceNameControllers,
                                             hintText: widget.insure,
                                             textInputType: TextInputType.text,
                                           ),
@@ -575,7 +578,7 @@ class _ShowPropertiesState extends State<ShowProperties> {
                                           height: 7,
                                         ),
                                         TextFormInputField(
-                                          controller: policyEndController,
+                                          controller: showpolicyEndController,
                                           hintText: widget.policyend,
                                           textInputType: TextInputType.text,
                                         ),

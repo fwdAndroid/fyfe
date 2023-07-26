@@ -116,7 +116,7 @@ class _AddAccountState extends State<AddAccount> {
                 height: 7,
               ),
               TextFormInputField(
-                controller: emailController,
+                controller: addAddressEmailController,
                 hintText: "abc@gmail.com",
                 textInputType: TextInputType.emailAddress,
               ),
@@ -133,7 +133,7 @@ class _AddAccountState extends State<AddAccount> {
                 height: 7,
               ),
               TextFormInputField(
-                controller: addressController,
+                controller: addAddressController,
                 hintText: "14 E Eden Garden",
                 textInputType: TextInputType.text,
               ),
@@ -150,7 +150,7 @@ class _AddAccountState extends State<AddAccount> {
                 height: 7,
               ),
               TextFormInputField(
-                controller: numberController,
+                controller: addAddressNumberController,
                 hintText: "1246363",
                 textInputType: TextInputType.phone,
               ),
@@ -166,24 +166,24 @@ class _AddAccountState extends State<AddAccount> {
                     : SaveButton(
                         title: "Save",
                         onTap: () {
-                          if (emailController.text.isEmpty) {
+                          if (addAddressEmailController.text.isEmpty) {
                             showSnakBar("Email is Required", context);
-                          } else if (addressController.text.isEmpty) {
+                          } else if (addAddressController.text.isEmpty) {
                             showSnakBar("Address of User is Required", context);
-                          } else if (numberController.text.isEmpty) {
+                          } else if (addAddressNumberController.text.isEmpty) {
                             showSnakBar("Phone Number is Required", context);
-                          } else if (emailController.text.isEmpty &&
-                              addressController.text.isEmpty &&
-                              numberController.text.isEmpty) {
+                          } else if (addAddressEmailController.text.isEmpty &&
+                              addAddressController.text.isEmpty &&
+                              addAddressNumberController.text.isEmpty) {
                             showSnakBar("All Fields is Required", context);
                           } else {
                             setState(() {
                               loading = true;
                             });
                             Database().addUserAccont(
-                                userEmail: emailController.text,
-                                userNumber: numberController.text,
-                                userAddress: addressController.text,
+                                userEmail: addAddressEmailController.text,
+                                userNumber: addAddressNumberController.text,
+                                userAddress: addAddressController.text,
                                 type: accountType);
                             setState(() {
                               loading = false;
