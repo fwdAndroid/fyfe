@@ -134,144 +134,244 @@ class _ShowAccountsState extends State<ShowAccounts> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ),
-                                  trailing: InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: Center(
-                                              child: TextUtil(
-                                                title: 'Update User Account"}',
-                                              ),
-                                            ),
-                                            content: SingleChildScrollView(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  const Text(
-                                                    "* User Email",
-                                                    style:
-                                                        TextStyle(fontSize: 12),
+                                  trailing: Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Center(
+                                                  child: TextUtil(
+                                                    title:
+                                                        'Update User Account"}',
                                                   ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  TextFormInputField(
-                                                    hintText: "abc@gmail.com",
-                                                    controller:
-                                                        emailAccountController,
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .onUserInteraction,
-                                                    textInputType: TextInputType
-                                                        .emailAddress,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 14,
-                                                  ),
-                                                  const Text(
-                                                    "User Phone Number",
-                                                    style:
-                                                        TextStyle(fontSize: 12),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  TextFormInputField(
-                                                    controller:
-                                                        phoneAccountController,
-                                                    hintText: "125246577",
-                                                    textInputType:
-                                                        TextInputType.number,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 14,
-                                                  ),
-                                                  const Text(
-                                                    "Address",
-                                                    style:
-                                                        TextStyle(fontSize: 12),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  TextFormInputField(
-                                                    controller:
-                                                        addressAccountController,
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .onUserInteraction,
-                                                    textInputType:
-                                                        TextInputType.text,
-                                                    hintText: "234 Eden Garden",
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            actions: <Widget>[
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text(
-                                                      "Cancel",
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w600,
+                                                ),
+                                                content: SingleChildScrollView(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      const Text(
+                                                        "* User Email",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
                                                       ),
-                                                    ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      TextFormInputField(
+                                                        hintText:
+                                                            "abc@gmail.com",
+                                                        controller:
+                                                            emailAccountController,
+                                                        autovalidateMode:
+                                                            AutovalidateMode
+                                                                .onUserInteraction,
+                                                        textInputType:
+                                                            TextInputType
+                                                                .emailAddress,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 14,
+                                                      ),
+                                                      const Text(
+                                                        "User Phone Number",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      TextFormInputField(
+                                                        controller:
+                                                            phoneAccountController,
+                                                        hintText: "125246577",
+                                                        textInputType:
+                                                            TextInputType
+                                                                .number,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 14,
+                                                      ),
+                                                      const Text(
+                                                        "Address",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      TextFormInputField(
+                                                        controller:
+                                                            addressAccountController,
+                                                        autovalidateMode:
+                                                            AutovalidateMode
+                                                                .onUserInteraction,
+                                                        textInputType:
+                                                            TextInputType.text,
+                                                        hintText:
+                                                            "234 Eden Garden",
+                                                      ),
+                                                    ],
                                                   ),
-                                                  ElevatedButton(
-                                                    onPressed: () async {
-                                                      await FirebaseFirestore
-                                                          .instance
-                                                          .collection(
-                                                              "accounts")
-                                                          .doc(data['uuid'])
-                                                          .update({
-                                                        "accountAddress":
-                                                            addressAccountController
-                                                                .text,
-                                                        "accountEmail":
-                                                            emailAccountController
-                                                                .text,
-                                                        'accountPhone':
-                                                            phoneAccountController
-                                                                .text
-                                                      });
-                                                      showSnakBar(
-                                                          "User Accounts are updated",
-                                                          context);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            backgroundColor:
-                                                                Palette.green),
-                                                    child: const Text("Update"),
-                                                  ),
+                                                ),
+                                                actions: <Widget>[
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                          "Cancel",
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () async {
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  "accounts")
+                                                              .doc(data['uuid'])
+                                                              .update({
+                                                            "accountAddress":
+                                                                addressAccountController
+                                                                    .text,
+                                                            "accountEmail":
+                                                                emailAccountController
+                                                                    .text,
+                                                            'accountPhone':
+                                                                phoneAccountController
+                                                                    .text
+                                                          });
+                                                          showSnakBar(
+                                                              "User Accounts are updated",
+                                                              context);
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                backgroundColor:
+                                                                    Palette
+                                                                        .green),
+                                                        child: const Text(
+                                                            "Update"),
+                                                      ),
+                                                    ],
+                                                  )
                                                 ],
-                                              )
-                                            ],
+                                              );
+                                            },
                                           );
                                         },
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(6.58),
-                                      decoration: BoxDecoration(
-                                          color: Color(0xffDBDBDB)),
-                                      child:
-                                          SvgPicture.asset("assets/pencil.svg"),
-                                    ),
+                                        child: Container(
+                                          padding: EdgeInsets.all(6.58),
+                                          decoration: BoxDecoration(
+                                              color: Color(0xffDBDBDB)),
+                                          child: SvgPicture.asset(
+                                              "assets/pencil.svg"),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: IconButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: Center(
+                                                        child: TextUtil(
+                                                          title:
+                                                              'Delete Insurer"}',
+                                                        ),
+                                                      ),
+                                                      content: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          const Text(
+                                                            "Are you sure to delete this",
+                                                            style: TextStyle(
+                                                                fontSize: 12),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      actions: <Widget>[
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: const Text(
+                                                                "Cancel",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            ElevatedButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                await FirebaseFirestore
+                                                                    .instance
+                                                                    .collection(
+                                                                        "accounts")
+                                                                    .doc(data[
+                                                                        'uuid'])
+                                                                    .delete();
+                                                                showSnakBar(
+                                                                    "User Account are Deleted",
+                                                                    context);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                      backgroundColor:
+                                                                          Palette
+                                                                              .green),
+                                                              child: const Text(
+                                                                  "Delete"),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            )),
+                                      )
+                                    ],
                                   ),
                                 ),
                                 Divider()
