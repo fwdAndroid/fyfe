@@ -32,3 +32,8 @@ double? lng;
 //Contact
 TabController? tabController;
 List typesList = ["Agents", "Insurers"];
+
+//Account Controllers
+final emailAccountController = TextEditingController();
+final phoneAccountController = TextEditingController();
+final addressAccountController = TextEditingController();
