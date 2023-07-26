@@ -2,10 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fyfe/widgets/custom_appbar.dart';
-import 'package:fyfe/widgets/custom_drawer.dart';
 import 'package:fyfe/widgets/drop.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Reports extends StatelessWidget {
   const Reports({Key? key}) : super(key: key);
@@ -104,11 +101,17 @@ class Reports extends StatelessWidget {
                                 documents[index].data() as Map<String, dynamic>;
                             return Card(
                               child: ListTile(
-                                trailing: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    "assets/Group.png",
-                                    height: 25,
+                                trailing: InkWell(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    // generatePdfReport();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      "assets/Group.png",
+                                      height: 25,
+                                    ),
                                   ),
                                 ),
                                 title: Text(
@@ -135,19 +138,6 @@ class Reports extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Create  Report",
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    backgroundColor: Color(0xff71C598),
-                    fixedSize: Size(350, 44)),
-              )
             ],
           ),
         ),
