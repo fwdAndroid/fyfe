@@ -21,3 +21,13 @@ List<String> rentTypes = [
 ];
 String agentName = "Add Agent";
 String insuranceName = "Add Insurance";
+
+//Account
+List<String> accountTypes = [
+  "Electrician",
+  "Real-Estate Agent",
+  "Plumber",
+  "Insurance Company ",
+];
+
+String accountType = "Electrician";

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fyfe/screens/property/add_property.dart';
+import 'package:fyfe/utils/user_accounts/show_accounts.dart';
 import 'package:fyfe/widgets/custom_appbar.dart';
 import 'package:fyfe/widgets/custom_drawer.dart';
 import 'package:fyfe/widgets/palette.dart';
@@ -129,7 +130,11 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
-                                        // controller.goToAddAccount();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (builder) =>
+                                                    ShowAccounts()));
                                       },
                                       child: Text("Add Account"),
                                       style: ElevatedButton.styleFrom(
