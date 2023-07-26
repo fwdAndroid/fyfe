@@ -697,21 +697,28 @@ class _FormWidgetState extends State<FormWidget> {
                                   bathroomsController.text ?? "0",
                               "numberofcarparks":
                                   carparksController.text ?? "0",
-                              "propertyValue": valueController.text,
+                              "propertyValue": valueController.text ?? "0",
                               "propertyPurchasePrice":
                                   int.parse(purchasepriceController.text) ?? 0,
                               "loanAmount": int.parse(loanController.text) ?? 0,
                               "propertyPurchaseDate":
                                   datePurchaseController.text,
-                              "propertyRent": int.parse(rentController.text),
+                              "propertyRent":
+                                  int.parse(rentController.text) ?? "0",
                               "agentName": selectedCategory,
                               "propertyLeaseStart":
-                                  leaseStartDateController.text,
-                              "propertyLeaseEnd": leaseStartDateend.text,
+                                  leaseStartDateController.text ??
+                                      "No Lease Obtained",
+                              "propertyLeaseEnd":
+                                  leaseStartDateend.text ?? "No Lease Obtained",
                               "insure": selectedInsurance ?? "",
-                              "policyNumber": policyNumberController.text,
-                              "policyObtainedDate": policyStartController.text,
-                              "policyEndDate": policyEndController.text,
+                              "policyNumber": policyNumberController.text ??
+                                  "No Lease Obtained",
+                              "policyObtainedDate":
+                                  policyStartController.text ??
+                                      "No Policy Obtained",
+                              "policyEndDate": policyEndController.text ??
+                                  "No Policy Obtained",
                               "photo": [],
                               "uid": FirebaseAuth.instance.currentUser!.uid,
                               "uuid": uuid
