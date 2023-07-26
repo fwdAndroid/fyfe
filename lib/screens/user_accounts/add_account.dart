@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fyfe/screens/user_accounts/show_accounts.dart';
+import 'package:fyfe/services/database.dart';
 import 'package:fyfe/utils/controllers.dart';
 import 'package:fyfe/utils/dropdownutils.dart';
+import 'package:fyfe/utils/showsnak.dart';
 import 'package:fyfe/utils/text_util.dart';
 import 'package:fyfe/utils/textformfield.dart';
 import 'package:fyfe/widgets/save_button_widget.dart';
@@ -13,6 +16,7 @@ class AddAccount extends StatefulWidget {
 }
 
 class _AddAccountState extends State<AddAccount> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +49,7 @@ class _AddAccountState extends State<AddAccount> {
               0xff3AADC6,
             ),
             Color(
-              0xff395CAA,
+              0xff375CAA,
             )
           ], radius: 1.8, center: Alignment.topCenter),
         ),
@@ -55,13 +59,13 @@ class _AddAccountState extends State<AddAccount> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 9),
+                padding: EdgeInsets.symmetric(horizontal: 7),
                 child: TextUtil(
                   title: "Account Types",
                 ),
               ),
               const SizedBox(
-                height: 9,
+                height: 7,
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -103,13 +107,13 @@ class _AddAccountState extends State<AddAccount> {
                 height: 8,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 9),
+                padding: EdgeInsets.symmetric(horizontal: 7),
                 child: TextUtil(
                   title: "User Email",
                 ),
               ),
               const SizedBox(
-                height: 9,
+                height: 7,
               ),
               TextFormInputField(
                 controller: emailController,
@@ -120,13 +124,13 @@ class _AddAccountState extends State<AddAccount> {
                 height: 8,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 9),
+                padding: EdgeInsets.symmetric(horizontal: 7),
                 child: TextUtil(
                   title: "User Address",
                 ),
               ),
               const SizedBox(
-                height: 9,
+                height: 7,
               ),
               TextFormInputField(
                 controller: addressController,
@@ -137,13 +141,13 @@ class _AddAccountState extends State<AddAccount> {
                 height: 8,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 9),
+                padding: EdgeInsets.symmetric(horizontal: 7),
                 child: TextUtil(
                   title: "User Phone Number",
                 ),
               ),
               const SizedBox(
-                height: 9,
+                height: 7,
               ),
               TextFormInputField(
                 controller: numberController,
@@ -151,11 +155,49 @@ class _AddAccountState extends State<AddAccount> {
                 textInputType: TextInputType.phone,
               ),
               const SizedBox(
-                height: 12,
+                height: 8,
               ),
               SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: SaveButton(title: "Save", onTap: () {}))
+                width: MediaQuery.of(context).size.width,
+                child: loading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SaveButton(
+                        title: "Save",
+                        onTap: () {
+                          if (emailController.text.isEmpty) {
+                            showSnakBar("Email is Required", context);
+                          } else if (addressController.text.isEmpty) {
+                            showSnakBar("Address of User is Required", context);
+                          } else if (numberController.text.isEmpty) {
+                            showSnakBar("Phone Number is Required", context);
+                          } else if (emailController.text.isEmpty &&
+                              addressController.text.isEmpty &&
+                              numberController.text.isEmpty) {
+                            showSnakBar("All Fields is Required", context);
+                          } else {
+                            setState(() {
+                              loading = true;
+                            });
+                            Database().addUserAccont(
+                                userEmail: emailController.text,
+                                userNumber: numberController.text,
+                                userAddress: addressController.text,
+                                type: accountType);
+                            setState(() {
+                              loading = false;
+                            });
+                            showSnakBar(
+                                "User Account Added Successfully", context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ShowAccounts()));
+                          }
+                        },
+                      ),
+              )
             ],
           ),
         ),

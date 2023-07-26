@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fyfe/utils/user_accounts/add_account.dart';
+import 'package:fyfe/screens/user_accounts/add_account.dart';
 
 class ShowAccounts extends StatefulWidget {
   const ShowAccounts({super.key});

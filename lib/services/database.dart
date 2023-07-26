@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fyfe/models/agent_model.dart';
 import 'package:fyfe/models/insurace_model.dart';
+import 'package:fyfe/models/user_account_model.dart';
 import 'package:uuid/uuid.dart';
 
 class Database {
@@ -53,6 +54,34 @@ class Database {
       );
       await FirebaseFirestore.instance
           .collection('insurance')
+          .doc(ss)
+          .set(userModel.toJson());
+      res = 'success';
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+
+  //Add User Account
+  Future<String> addUserAccont(
+      {required String userEmail,
+      required String userNumber,
+      required String userAddress,
+      required String type}) async {
+    String res = 'Some error occured';
+    var ss = Uuid().v4();
+    try {
+      //Add User to the database with modal
+      UserModel userModel = UserModel(
+          uuid: ss,
+          accountAddress: userAddress,
+          accountPhone: userNumber,
+          id: FirebaseAuth.instance.currentUser!.uid,
+          accountEmail: userEmail,
+          type: type);
+      await FirebaseFirestore.instance
+          .collection('accounts')
           .doc(ss)
           .set(userModel.toJson());
       res = 'success';
