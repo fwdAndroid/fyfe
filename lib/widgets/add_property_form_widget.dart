@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:fyfe/utils/controllers.dart';
 import 'package:fyfe/utils/dropdownutils.dart';
 import 'package:fyfe/utils/showsnak.dart';
@@ -12,6 +13,9 @@ import 'package:fyfe/widgets/save_button_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import '../screens/property/add_property_image.dart';
+import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:google_api_headers/google_api_headers.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FormWidget extends StatefulWidget {
   const FormWidget({super.key});
@@ -25,6 +29,10 @@ class _FormWidgetState extends State<FormWidget> {
   bool uploading = false;
   String? selectedCategory;
   String? selectedInsurance;
+  String googleApikey = "AIzaSyBffT8plN_Vdcd308KgmzIfGVQN6q-CkAo";
+  GoogleMapController? mapController; //contrller for Google map
+  CameraPosition? cameraPosition;
+  String location = 'Please move map to A specific location.';
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +53,41 @@ class _FormWidgetState extends State<FormWidget> {
               height: 9,
             ),
             TextFormInputField(
-              // onTap: () {
-              //   Navigator.pushNamed(context, "/addressPage");
-              // },
+              onTap: () async {
+                var place = await PlacesAutocomplete.show(
+                    context: context,
+                    apiKey: googleApikey,
+                    mode: Mode.overlay,
+                    types: [],
+                    strictbounds: false,
+                    // components: [
+                    //   Component(Component.country, 'ae')
+                    // ],
+                    //google_map_webservice package
+                    onError: (err) {
+                      print(err);
+                    });
+
+                if (place != null) {
+                  setState(() {
+                    location = place.description.toString();
+                    propertyAddressController.text = location;
+                  });
+                  final plist = GoogleMapsPlaces(
+                    apiKey: googleApikey,
+                    apiHeaders: await GoogleApiHeaders().getHeaders(),
+                    //from google_api_headers package
+                  );
+                  String placeid = place.placeId ?? "0";
+                  final detail = await plist.getDetailsByPlaceId(placeid);
+                  final geometry = detail.result.geometry!;
+                  final lat = geometry.location.lat;
+                  final lang = geometry.location.lng;
+                  var newlatlang = LatLng(lat, lang);
+                  mapController?.animateCamera(CameraUpdate.newCameraPosition(
+                      CameraPosition(target: newlatlang, zoom: 17)));
+                }
+              },
               controller: propertyAddressController,
               hintText: "15 Roma Rd St Ives",
               textInputType: TextInputType.emailAddress,
